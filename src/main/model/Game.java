@@ -1,5 +1,6 @@
 package main.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import main.model.exception.GameCommonException;
 import main.model.exception.GameNotMeetRequirementsException;
 
@@ -10,6 +11,7 @@ public class Game implements Subscriber {
 
     public void prepare(String configName) throws GameCommonException, GameNotMeetRequirementsException {
         levelConfigurator = new LevelConfigurator(configName);
+        levelConfigurator.readConfig();
         level = levelConfigurator.createLevel();
 
         /////////
@@ -19,9 +21,22 @@ public class Game implements Subscriber {
         player.subscribe(this);
     }
 
-    public void start() {
+    public Boolean startGameProcess() {
+        Boolean isOk = true;
+        while (isOk) {
+            isOk = level.getWaterCreator().pushWater();
+        }
 
-        level.getWaterCreator().pushWater();
+        //обработать конец игры
+        return this.endGame();
+    }
+
+    private Boolean endGame() {
+        if (level.getWaterChecker().checkWater()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

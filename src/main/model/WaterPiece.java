@@ -16,25 +16,28 @@ public class WaterPiece implements Cloneable {
         this.characteristicList = characteristicList;
     }
 
+    private WaterPiece(WaterPiece waterPiece) {
+        this.pipeElement = null;
+        this.characteristicList = waterPiece.characteristicList;
+    }
+
     public List<Characteristic> getCharacteristicList() {
         return characteristicList;
     }
 
-    public void giveCharacteristic(CharacteristicChanger changer){
+    public void transform(CharacteristicChanger changer){
         for (Characteristic characteristic : characteristicList ) {
-            if (characteristic.getCharacteristicChangerTypeList().contains(changer.getChangerType())) {
-                characteristic.change(changer);
-            }
+            characteristic.change(changer);
         }
     }
 
-    public PipeElement go() {
+    public PipeElement getPipeElement() {
         return this.pipeElement;
     }
 
     @Override
     public Object clone() {
-        return new();
+        return new WaterPiece(this);
     }
 
     public void setPipeElement(PipeElement next) {

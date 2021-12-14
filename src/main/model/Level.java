@@ -3,6 +3,7 @@ package main.model;
 import main.model.characteristic.Characteristic;
 import main.model.exception.GameNotMeetRequirementsException;
 import main.model.pipeelement.PipeElement;
+import main.model.pipeelement.WaterChecker;
 import main.model.pipeelement.WaterCreator;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class Level {
 
 
     private Point waterCreatorPoint;
+    private Point waterCheckerPoint;
     private Water water;
 
 
@@ -31,6 +33,25 @@ public class Level {
     public WaterCreator getWaterCreator() {
         return (WaterCreator)this.elementsMap.get(this.waterCreatorPoint); //?
     }
+
+    public void findNeighbours() {
+        Map<Point, PipeElement> copyElementsMap = elementsMap;
+        elementsMap.forEach((point, pipeElement) -> {
+            //сосед сверху
+            pipeElement.addNeighbor(DirectionTypeEnum.UP, copyElementsMap.get(new Point(point.getX(), point.getY()+1)));
+            //сосед справа
+            pipeElement.addNeighbor(DirectionTypeEnum.RIGHT, copyElementsMap.get(new Point(point.getX()+1, point.getY())));
+            //сосед снизу
+            pipeElement.addNeighbor(DirectionTypeEnum.DOWN, copyElementsMap.get(new Point(point.getX(), point.getY()-1)));
+            //сосед слева
+            pipeElement.addNeighbor(DirectionTypeEnum.LEFT, copyElementsMap.get(new Point(point.getX()-1, point.getY())));
+        });
+    }
+
+    public WaterChecker getWaterChecker() {
+        return (WaterChecker)this.elementsMap.get(this.waterCheckerPoint); //?
+    }
+
 
     public static class LevelBuilder {
         Point waterCreatorPoint;

@@ -10,6 +10,8 @@ import java.util.List;
 public class Water implements Player {
     private static Water instance;
     private List<WaterPiece> waterPieceList;
+
+
     private List<Subscriber> subscriberList;
 
     private Water(PipeElement pipeElement, List<Characteristic> characteristicList) {
@@ -26,24 +28,40 @@ public class Water implements Player {
         return instance;
     }
 
-    public WaterPiece getFirst() {
+    public WaterPiece getHead() {
         if (waterPieceList != null && !waterPieceList.isEmpty()) {
-            return waterPieceList.get(0);
+            return waterPieceList.get(waterPieceList.size()-1);
         } else {
             return null;
         }
     }
 
-    public void doStep() {
-        PipeElement current = this.getFirst().go();
-        PipeElement next = choose(current.getDirectionList());
+    public Boolean doStep() {
+        //Берем у головы потока его элемент трубы
+        PipeElement current = this.getHead().getPipeElement();
 
-        waterPieceList.add(getFirst().clone());
-        getFirst().setPipeElement(next);
+        //У трубы спрашиваем достижимых соседей и выбираем среди них
+        PipeElement next = choose(current.getReachablePipeElementList());
+
+        if (next == null) {
+            return false;
+        }
+
+        //Создаем копию головы
+        waterPieceList.add((WaterPiece) getHead().clone());
+
+        //Копией головы двигаемся в следующий элемент трубы
+        getHead().setPipeElement(next);
+        return true;
 
     }
 
-    private PipeElement choose(List<HoleDirection> directionList) {
+    protected PipeElement choose(List<PipeElement> pipeElementList) {
+        //возможно переопределяемое поведение - стратегия выбора отверстия
+        if (pipeElementList != null && !pipeElementList.isEmpty()) {
+            return pipeElementList.get(0);
+        } else
+            return null;
     }
 
     @Override

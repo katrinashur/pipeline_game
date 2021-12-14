@@ -9,5 +9,5 @@ public interface WaterCreator {
 
     Water createWater(List<Characteristic> characteristicList);
 
-    void pushWater();
+    Boolean pushWater();
 }

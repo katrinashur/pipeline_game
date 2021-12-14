@@ -11,14 +11,14 @@ public class Tap extends PipeElement implements WaterCreator {
     private Water water;
 
     public Water createWater(List<Characteristic> characteristicList) {
-        Water water = Water.getInstance(this, characteristicList);
-        this.waterPiece = water.getFirst();
+        water = Water.getInstance(this, characteristicList);
+        this.waterPiece = water.getHead();
         return water;
     }
 
     @Override
-    public void pushWater() {
-        this.water.doStep();
+    public Boolean pushWater() {
+       return this.water.doStep();
     }
 
     @Override
