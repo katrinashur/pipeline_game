@@ -1,0 +1,29 @@
+{
+    "field": {
+        "length": 3,
+        "width": 1
+    },
+    "tap": {
+        "point": {
+            "x": 0,
+            "y": 0
+        }
+    },
+    "drain": {
+        "point": {
+            "x": 2,
+            "y": 0
+        },
+        "characteristic": "temperature"
+    },
+    "segment": {
+        "point": {
+            "x": 1,
+            "y": 0
+        },
+        "characteristic": "temperature"
+    },
+    "water": {
+        "characteristic": "temperature"
+    }
+}
