@@ -25,9 +25,9 @@ public class WaterPiece implements Cloneable {
         return characteristicList;
     }
 
-    public void transform(CharacteristicChanger changer){
+    public void transform(List<CharacteristicChanger> changerList){
         for (Characteristic characteristic : characteristicList ) {
-            characteristic.change(changer);
+            characteristic.change(changerList);
         }
     }
 

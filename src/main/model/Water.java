@@ -1,22 +1,17 @@
 package main.model;
 
-import jdk.jfr.Event;
 import main.model.characteristic.Characteristic;
 import main.model.pipeelement.PipeElement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Water implements Player {
+public class Water {
     private static Water instance;
     private List<WaterPiece> waterPieceList;
 
-
-    private List<Subscriber> subscriberList;
-
     private Water(PipeElement pipeElement, List<Characteristic> characteristicList) {
         waterPieceList = new ArrayList<>();
-        subscriberList = new ArrayList<>();
         WaterPiece waterPiece = new WaterPiece(pipeElement, characteristicList);
         waterPieceList.add(waterPiece);
     }
@@ -63,15 +58,4 @@ public class Water implements Player {
         } else
             return null;
     }
-
-    @Override
-    public void fireEvent(Event event) {
-        this.subscriberList.stream().forEach(subscriber -> subscriber.update());
-    }
-
-    @Override
-    public void subscribe(Subscriber subscriber) {
-        this.subscriberList.add(subscriber);
-    }
-
 }

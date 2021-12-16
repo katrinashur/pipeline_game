@@ -16,10 +16,15 @@ public abstract class PipeElement {
 
     protected WaterPiece waterPiece;
 
-    public  List<DirectionTypeEnum> getDirectionList() {
-        //найдем через соседей элементы куда можно протечь
-        List<DirectionTypeEnum> directionList = new ArrayList<>();
-        return directionList;
+    public PipeElement() {
+    }
+
+    public List<DirectionTypeEnum> getDirectionList() {
+        return this.directionList;
+    }
+
+    public void setDirectionList(List<DirectionTypeEnum> directionList) {
+        this.directionList = directionList;
     }
 
     public void addNeighbor(DirectionTypeEnum direction, PipeElement pipeElement) {
@@ -35,15 +40,16 @@ public abstract class PipeElement {
     public List<PipeElement> getReachablePipeElementList() {
         List<PipeElement> reachable = new ArrayList<>();
         //проверить что лист не null и не пуст
-        if (directionList.size() == 1) {
-            //если дыра одна
-            DirectionTypeEnum directionWay = directionList.get(0);
-            PipeElement neighbor = neighbors.get(directionWay);
-            if (neighbor.getDirectionList().contains(DirectionTypeEnum.getOpposite(directionWay))) {
+        for (DirectionTypeEnum directionType : directionList) {
+            //Получаем соседа по этому направлению
+            PipeElement neighbor = neighbors.get(directionType);
+
+            //ПРОВЕРИТЬ!
+            if (neighbor.getDirectionList().contains(DirectionTypeEnum.getOpposite(directionType))) {
+                //Если у соседа есть отверствие в противоположную сторону (текуший элемент - верх, сосед - вниз)
                 reachable.add(neighbor);
             }
-        } else {
-
         }
+        return reachable;
     }
 }

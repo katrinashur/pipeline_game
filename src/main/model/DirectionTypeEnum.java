@@ -27,4 +27,21 @@ public enum DirectionTypeEnum {
         }
         return null;
     }
+
+    public static DirectionTypeEnum getNextOnTurn(DirectionTypeEnum directionType) {
+        switch (directionType) {
+            case UP:
+                return DirectionTypeEnum.RIGHT;
+
+            case DOWN:
+                return DirectionTypeEnum.LEFT;
+
+            case RIGHT:
+                return DirectionTypeEnum.DOWN;
+
+            case LEFT:
+                return DirectionTypeEnum.UP;
+        }
+        return null;
+    }
 }

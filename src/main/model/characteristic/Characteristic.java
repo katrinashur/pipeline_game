@@ -1,16 +1,24 @@
 package main.model.characteristic;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Characteristic {
 
     CharacteristicChanger changer;
 
-    private List<CharacteristicChangerTypeEnum> characteristicChangerTypeList;
+    public abstract void change(List<CharacteristicChanger> characteristicChangerList);
 
-    public abstract void change(CharacteristicChanger... changers);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Characteristic that = (Characteristic) o;
+        return Objects.equals(changer, that.changer);
+    }
 
-    public List<CharacteristicChangerTypeEnum> getCharacteristicChangerTypeList() {
-        return characteristicChangerTypeList;
+    @Override
+    public int hashCode() {
+        return Objects.hash(changer);
     }
 }

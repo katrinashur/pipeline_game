@@ -12,13 +12,9 @@ import java.util.Map;
 public class Level {
 
     private Map<Point, PipeElement> elementsMap;
-    private List<Characteristic> characteristicList;
-
 
     private Point waterCreatorPoint;
     private Point waterCheckerPoint;
-    private Water water;
-
 
 
     protected Level(Level.LevelBuilder builder) {
@@ -32,6 +28,10 @@ public class Level {
 
     public WaterCreator getWaterCreator() {
         return (WaterCreator)this.elementsMap.get(this.waterCreatorPoint); //?
+    }
+
+    public WaterChecker getWaterChecker() {
+        return (WaterChecker)this.elementsMap.get(this.waterCheckerPoint); //?
     }
 
     public void findNeighbours() {
@@ -48,14 +48,10 @@ public class Level {
         });
     }
 
-    public WaterChecker getWaterChecker() {
-        return (WaterChecker)this.elementsMap.get(this.waterCheckerPoint); //?
-    }
-
 
     public static class LevelBuilder {
         Point waterCreatorPoint;
-        List<Characteristic> characteristicList;
+        Point waterCheckerPoint;
         Map<Point, PipeElement> elementsMap;
 
         public LevelBuilder setWaterCreatorPoint(Point waterCreatorPoint) {
@@ -63,13 +59,20 @@ public class Level {
             return this;
         }
 
-        public LevelBuilder setCharacteristicList(List<Characteristic> characteristicList) {
-            this.characteristicList = characteristicList;
+        public LevelBuilder setWaterCheckerPoint(Point waterCheckerPoint) {
+            this.waterCheckerPoint = waterCheckerPoint;
+            return this;
+        }
+
+        public LevelBuilder setElementsMap(Map<Point, PipeElement> elementsMap) {
+            this.elementsMap = elementsMap;
             return this;
         }
 
         public Level build() throws GameNotMeetRequirementsException {
-            if (this.waterCreatorPoint == null || this.elementsMap.isEmpty()) {
+            if (this.elementsMap.isEmpty()         ||
+                    this.waterCreatorPoint == null ||
+                    this.waterCheckerPoint == null) {
                 throw new GameNotMeetRequirementsException("Конструкция уровня не соответствует базовым требования уровня");
             }
 
@@ -77,9 +80,16 @@ public class Level {
                 throw new GameNotMeetRequirementsException("На месте крана должен быть кран");
             }
 
+            if (!(this.elementsMap.get(this.waterCheckerPoint) instanceof WaterChecker)) {
+                throw new GameNotMeetRequirementsException("На месте слива должен быть слив");
+            }
+
             //всевозможные проверки
 
-            return new Level(this);
+            Level level = new Level(this);
+            //Расставим соседей
+            level.findNeighbours();
+            return level;
         }
 
     }

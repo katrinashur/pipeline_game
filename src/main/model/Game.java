@@ -1,27 +1,21 @@
 package main.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import main.model.exception.ConfigurationNotCorrectException;
 import main.model.exception.GameCommonException;
 import main.model.exception.GameNotMeetRequirementsException;
 
-public class Game implements Subscriber {
+public class Game  {
 
     private Level level;
     private LevelConfigurator levelConfigurator;
 
-    public void prepare(String configName) throws GameCommonException, GameNotMeetRequirementsException {
+    public void prepare(String configName) throws GameCommonException, GameNotMeetRequirementsException, ConfigurationNotCorrectException {
         levelConfigurator = new LevelConfigurator(configName);
         levelConfigurator.readConfig();
         level = levelConfigurator.createLevel();
-
-        /////////
-
-        Player player = level.getWaterCreator().createWater(levelConfigurator.getCharacteristicList());
-        //Буду следить за игроком
-        player.subscribe(this);
     }
 
-    public Boolean startGameProcess() {
+    public GameResult gameProcess() {
         Boolean isOk = true;
         while (isOk) {
             isOk = level.getWaterCreator().pushWater();
@@ -31,17 +25,12 @@ public class Game implements Subscriber {
         return this.endGame();
     }
 
-    private Boolean endGame() {
+    private GameResult endGame() {
         if (level.getWaterChecker().checkWater()) {
-            return true;
+            return GameResult.VICTORY;
         } else {
-            return false;
+            return GameResult.LOSING;
         }
     }
 
-    @Override
-    public void update() {
-        //реакция на событие
-
-    }
 }
