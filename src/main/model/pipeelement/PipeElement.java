@@ -12,7 +12,7 @@ public abstract class PipeElement {
     protected List<DirectionTypeEnum> directionList;
     protected Map<DirectionTypeEnum, PipeElement> neighbors; //по 4 сторонам
 
-    protected DirectionTypeEnum enter; // ?
+    protected PipeElement source;
 
     protected WaterPiece waterPiece;
 
@@ -32,9 +32,9 @@ public abstract class PipeElement {
         neighbors.put(direction, pipeElement);
     }
 
-    public void fillWithWaterPiece(WaterPiece waterPiece) {
+    public void fillWithWaterPiece(PipeElement source, WaterPiece waterPiece) {
         this.waterPiece = waterPiece;
-        //нужно как-то помечать вход
+        this.source = source;
     }
 
     public List<PipeElement> getReachablePipeElementList() {
@@ -44,7 +44,11 @@ public abstract class PipeElement {
             //Получаем соседа по этому направлению
             PipeElement neighbor = neighbors.get(directionType);
 
-            //ПРОВЕРИТЬ!
+            //Не рассматриваем соседа откуда пришла вода
+            if (neighbor == source) {
+                continue;
+            }
+
             if (neighbor.getDirectionList().contains(DirectionTypeEnum.getOpposite(directionType))) {
                 //Если у соседа есть отверствие в противоположную сторону (текуший элемент - верх, сосед - вниз)
                 reachable.add(neighbor);
@@ -52,4 +56,5 @@ public abstract class PipeElement {
         }
         return reachable;
     }
+
 }

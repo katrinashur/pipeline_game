@@ -21,6 +21,10 @@ public class Drain extends PipeElement implements WaterChecker {
         if (this.characteristicList != null && !characteristicList.isEmpty()) {
             return this.compareCharacteristic(this.characteristicList, this.waterPiece.getCharacteristicList());
         }
+
+        if (this.waterPiece == null) {
+            return false;
+        }
         //Если не заполнен, значит все равно какая вода придет
         return true;
     }

@@ -4,6 +4,9 @@ import main.model.exception.ConfigurationNotCorrectException;
 import main.model.exception.GameCommonException;
 import main.model.exception.GameNotMeetRequirementsException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game  {
 
     private Level level;
@@ -15,7 +18,7 @@ public class Game  {
         level = levelConfigurator.createLevel();
     }
 
-    public GameResult gameProcess() {
+    public GameResult startGameProcess() {
         Boolean isOk = true;
         while (isOk) {
             isOk = level.getWaterCreator().pushWater();
@@ -23,6 +26,10 @@ public class Game  {
 
         //обработать конец игры
         return this.endGame();
+    }
+
+    public List<String> loadLevelList() {
+        return new ArrayList<>();
     }
 
     private GameResult endGame() {

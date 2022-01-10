@@ -2,7 +2,6 @@ package main.model.pipeelement;
 
 import main.model.DirectionTypeEnum;
 import main.model.Water;
-import main.model.WaterPiece;
 import main.model.characteristic.Characteristic;
 
 import java.util.ArrayList;
@@ -26,11 +25,6 @@ public class Tap extends PipeElement implements WaterCreator {
     @Override
     public Boolean pushWater() {
        return this.water.doStep();
-    }
-
-    @Override
-    public void fillWithWaterPiece(WaterPiece waterPiece) {
-
     }
 
 }

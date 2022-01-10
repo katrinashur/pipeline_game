@@ -46,7 +46,7 @@ public class Water {
         waterPieceList.add((WaterPiece) getHead().clone());
 
         //Копией головы двигаемся в следующий элемент трубы
-        getHead().setPipeElement(next);
+        getHead().fillPipeElement(current, next);
         return true;
 
     }
@@ -55,7 +55,7 @@ public class Water {
         //возможно переопределяемое поведение - стратегия выбора отверстия
         if (pipeElementList != null && !pipeElementList.isEmpty()) {
             return pipeElementList.get(0);
-        } else
-            return null;
+        }
+        return null;
     }
 }

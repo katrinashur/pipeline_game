@@ -40,8 +40,8 @@ public class WaterPiece implements Cloneable {
         return new WaterPiece(this);
     }
 
-    public void setPipeElement(PipeElement next) {
+    public void fillPipeElement(PipeElement previous, PipeElement next) {
         this.pipeElement = next;
-        next.fillWithWaterPiece(this);
+        next.fillWithWaterPiece(previous, this);
     }
 }

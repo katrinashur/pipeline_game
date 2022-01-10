@@ -12,6 +12,7 @@ import main.model.pipeelement.*;
 import main.model.pipeelement.factory.SegmentFactory;
 import main.model.pipeelement.factory.WaterCheckerFactory;
 import main.model.pipeelement.factory.WaterCreatorFactory;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -54,12 +55,13 @@ public class LevelConfigurator {
         Point waterCheckerPoint;
         Point segment;
         Map<Point, PipeElement>  elementsMap = new HashMap<>();
-        for ( : jsonArrayElements) {
+        for (JSONArray element : jsonArrayElements) {
             if () {
                 //Если кран
                 WaterCreator waterCreator = this.waterCreatorFactory.createWaterCreator(this.config.getJSONObject("waterCreator"));
                 waterCreatorPoint = this.parseElementPoint(this.config.getJSONObject("waterCreator"));
                 elementsMap.put(waterCreatorPoint, (Tap)waterCreator); //?
+                waterCreator.createWater()
             } else if () {
                 //Если слив
                 WaterChecker waterChecker = this.waterCheckerFactory.createWaterChecker(characteristicList, this.config.getJSONObject("waterChecker"));
@@ -112,6 +114,12 @@ public class LevelConfigurator {
         } catch (JsonProcessingException e) {
             throw new ConfigurationNotCorrectException("Координаты записаны неверно");
         }
+    }
+
+    public void setElementOnPoint(PipeElement pipeElement, Point point) {
+        //проверки
+
+        this.e
     }
 
 }

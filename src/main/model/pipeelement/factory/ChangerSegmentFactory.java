@@ -2,6 +2,7 @@ package main.model.pipeelement.factory;
 
 import main.model.DirectionTypeEnum;
 import main.model.exception.ConfigurationNotCorrectException;
+import main.model.pipeelement.ChangerSegment;
 import main.model.pipeelement.PipeElement;
 import main.model.pipeelement.Segment;
 import org.json.JSONArray;
@@ -10,18 +11,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SegmentFactory extends AbstractPipeElementFactory {
+public class ChangerSegmentFactory {
 
-    private ChangerSegmentFactory changerSegmentFactory = new TemperatureChangerSegmentFactory();
-
-    @Override
-    protected PipeElement createWithDirections(List<DirectionTypeEnum> directionTypeList) throws ConfigurationNotCorrectException {
-        if (directionTypeList == null || directionTypeList.size() < 2) {
-            throw new ConfigurationNotCorrectException("Неправильная инициализация сегмента");
-        }
-        Segment segment = new Segment(directionTypeList);
-        return segment;
-    }
+    public TemperatureChangerSegmentFactory temperatureChangerSegmentFactory;
 
     public PipeElement createPipeElement(JSONObject jsonPipeElement) throws ConfigurationNotCorrectException {
         if (!jsonPipeElement.has("directionTypeList") || !(jsonPipeElement.get("directionTypeList") instanceof JSONArray)) {
@@ -46,5 +38,4 @@ public class SegmentFactory extends AbstractPipeElementFactory {
         //Сегмент не умеет изменять характеристики
         return createWithDirections(directionTypeList);
     }
-
 }

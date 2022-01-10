@@ -11,6 +11,10 @@ public class WaterCheckerFactory {
 
     private DrainFactory drainFactory;
 
+    public WaterCheckerFactory() {
+        this.drainFactory = new DrainFactory();
+    }
+
     public WaterChecker createWaterChecker(List<Characteristic> expectedCharacteristicList, JSONObject jsonWaterChecker) throws ConfigurationNotCorrectException {
         WaterChecker checker = (WaterChecker)drainFactory.createPipeElement(jsonWaterChecker);
         checker.setExpectedCharacteristic(expectedCharacteristicList);

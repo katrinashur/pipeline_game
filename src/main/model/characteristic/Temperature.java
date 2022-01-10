@@ -1,27 +1,29 @@
 package main.model.characteristic;
 
+import main.model.WaterPiece;
+
 import java.util.List;
 
-public class Temperature extends Characteristic {
+public abstract class Temperature extends Characteristic {
+
+    protected Integer degrees;
 
     public Temperature() {
-        this.changer = new EnergyQuantity();
+        this.degrees = 0;
     }
 
     @Override
-    public void change(List<CharacteristicChanger> characteristicChangerList) {
+    public void change(List<Characteristic> initialState, List<CharacteristicChanger> characteristicChangerList) {
         for (CharacteristicChanger changer: characteristicChangerList) {
             if (changer instanceof EnergyQuantity) {
-                increase((EnergyQuantity) changer);
+                increase(initialState, (EnergyQuantity) changer);
             }
         }
     }
 
-    protected void increase(EnergyQuantity energyQuantity) {
-        ((EnergyQuantity)this.changer).addEnergyQuantity(energyQuantity);
-    }
+    protected abstract void increase(List<Characteristic> initialState, EnergyQuantity energyQuantity);
 
     public Integer getDegrees() {
-        return ((EnergyQuantity)this.changer).getDegrees();
+        return this.degrees;
     }
 }

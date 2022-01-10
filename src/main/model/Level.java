@@ -1,12 +1,10 @@
 package main.model;
 
-import main.model.characteristic.Characteristic;
 import main.model.exception.GameNotMeetRequirementsException;
 import main.model.pipeelement.PipeElement;
 import main.model.pipeelement.WaterChecker;
 import main.model.pipeelement.WaterCreator;
 
-import java.util.List;
 import java.util.Map;
 
 public class Level {
@@ -20,6 +18,7 @@ public class Level {
     protected Level(Level.LevelBuilder builder) {
         this.elementsMap = builder.elementsMap;
         this.waterCreatorPoint = builder.waterCreatorPoint;
+        this.waterCheckerPoint = builder.waterCheckerPoint;
     }
 
     public Map<Point, PipeElement> getElementsMap() {

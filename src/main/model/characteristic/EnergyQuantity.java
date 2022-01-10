@@ -4,18 +4,14 @@ import java.util.Objects;
 
 public class EnergyQuantity extends CharacteristicChanger{
 
-    private Integer degrees;
+    private Integer energyQuantity;
 
-    public EnergyQuantity() {
-        this.degrees = 0;
+    public EnergyQuantity(Integer energyQuantity) {
+        this.energyQuantity = 0;
     }
 
-    public void addEnergyQuantity(EnergyQuantity other) {
-        this.degrees += other.degrees;
-    }
-
-    public Integer getDegrees() {
-        return degrees;
+    public Integer getEnergyQuantity() {
+        return energyQuantity;
     }
 
     @Override
@@ -23,6 +19,6 @@ public class EnergyQuantity extends CharacteristicChanger{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EnergyQuantity that = (EnergyQuantity) o;
-        return Objects.equals(degrees, that.degrees);
+        return Objects.equals(energyQuantity, that.energyQuantity);
     }
 }
